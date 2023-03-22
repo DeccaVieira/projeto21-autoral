@@ -7,7 +7,7 @@ async function findEmail(email: string) {
   });
 }
 
-async function createUser(cpf, name, email, hashPassword, phoneNumber ) {
+async function createUser(cpf:number, name:string, email:string, hashPassword:string, phoneNumber:number ) {
   return prisma.users.create({
     data: {
       cpf: cpf,

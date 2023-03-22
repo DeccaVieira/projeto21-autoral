@@ -1,8 +1,8 @@
 export type User = {
-  cpf: number;
+  cpf: string;
   name: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   password: string;
 };
 
