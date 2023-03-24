@@ -1,6 +1,6 @@
 import { Router } from "express";
-import signUpController from "../controllers/signUp-controllers";
 import middlewareSignUp from "../middlewares/signUp-middleware";
+import signUpController from "../controllers/signUp-controllers";
 
 const signUpRouter = Router();
 

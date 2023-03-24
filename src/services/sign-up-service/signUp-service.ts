@@ -1,18 +1,25 @@
 import { User } from "../../protocols/signUp-protocols";
 import signUpRepository from "../../repositories/signUp-repository";
 import signUpErrors from "./errors";
+import prisma from "../../config/database";
 
 async function createUser(cpf, name, email, hashPassword, phoneNumber) {
-   
-  if (!email || !hashPassword) {
+  if (!cpf || !name || !email || !hashPassword || !phoneNumber) {
     throw signUpErrors.emailAndPasswordRequired();
   }
   const userExists = await signUpRepository.findEmail(email);
-  
-  if (userExists) {
+  console.log(userExists, "user");
+
+   if (userExists) {
     throw signUpErrors.emailAlreadyExists();
   }
-  await signUpRepository.createUser(cpf, name, email, hashPassword, phoneNumber );
+  await signUpRepository.createUser(
+    cpf,
+    name,
+    email,
+    hashPassword,
+    phoneNumber
+  );
 }
 
 const signUpService = {

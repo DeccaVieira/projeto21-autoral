@@ -12,9 +12,9 @@
     "test:load-envs": "dotenv -e .env.test",
     "test:seed": "npm run test:load-envs prisma db seed",
     "dev": "NODE_ENV=development nodemon --watch 'src/' --exec 'ts-node -r ./src/index.ts' -e ts",
-  "prisma:seed": "npx prisma db seed"
+    "prisma:seed": "npx prisma db seed"
   },
-  "prisma":{
+  "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "repository": {
@@ -29,17 +29,19 @@
   },
   "homepage": "https://github.com/DeccaVieira/projeto21-autoral#readme",
   "dependencies": {
+    "@prisma/client": "^3.14.0",
+    "@types/node": "^18.15.6",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "joi": "^17.8.1",
     "pg": "^8.9.0",
-    "prisma-client": "^0.0.0"
+    "prisma": "^3.14.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@prisma/client": "^4.9.0",
+    "@prisma/client": "^4.11.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/cryptr": "^4.0.1",

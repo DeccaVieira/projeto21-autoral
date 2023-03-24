@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import prisma from "../config/database";
 import siginInRepository from "../repositories/signIn-repository";
-//import signInErrors from "../services/sign-in-service/errors";
 
 async function tokenAuthentication(
   req: AuthenticatedRequest,
@@ -25,7 +23,7 @@ async function tokenAuthentication(
   try {
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTUser;
 
-    res.locals.user = { id: dataUser.id, email: dataUser.email };
+    res.locals.signin = { id: dataUser.id, email: dataUser.email };
 
     return next();
   } catch (err) {

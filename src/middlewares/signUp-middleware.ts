@@ -14,9 +14,9 @@ async function validateSignUp(req: Request, res: Response, next: NextFunction) {
   }
   try {
   } catch (err) {
-    res.status(422).send(err.message);
+    return res.status(422).send(err.message);
   }
-  res.locals.user = { cpf, name, email, password, phoneNumber };
+  res.locals.user = { cpf, name, email, password, phoneNumber};
   next();
 }
 
