@@ -2,7 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -32,8 +31,8 @@ model health_professional {
   id               Int      @id @default(autoincrement())
   name             String
   cbo_id           Int
-  served_cities_id Int
   created_at       DateTime @default(now()) @db.Timestamp(6)
+  served_cities_id Int
   cbo              cbo      @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   cities           cities   @relation(fields: [served_cities_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -50,20 +49,16 @@ model medical_insurance_plan {
   name                 String
   medical_insurance_id Int
   medical_insurance    medical_insurance @relation(fields: [medical_insurance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  personal_data        personal_data[]
 }
 
 model personal_data {
-  id                        Int                    @id @default(autoincrement())
-  phone_number              String
-  medical_insurance_id      Int
-  medical_insurance_plan_id Int
-  user_id                   Int
-  medical_insurance_number  Int
-  created_at                DateTime               @default(now()) @db.Timestamp(6)
-  medical_insurance         medical_insurance      @relation(fields: [medical_insurance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  medical_insurance_plan    medical_insurance_plan @relation(fields: [medical_insurance_plan_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users                     users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                       Int               @id @default(autoincrement())
+  medical_insurance_id     Int
+  medical_insurance_number Int
+  user_id                  Int
+  created_at               DateTime          @default(now()) @db.Timestamp(6)
+  medical_insurance        medical_insurance @relation(fields: [medical_insurance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                    users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
@@ -72,7 +67,7 @@ model users {
   name          String
   email         String
   password      String
-  created_at    DateTime        @default(now()) @db.Timestamp(6)
   phone_number  String
+  created_at    DateTime        @default(now()) @db.Timestamp(6)
   personal_data personal_data[]
 }
