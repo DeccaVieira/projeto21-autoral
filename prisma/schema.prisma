@@ -49,16 +49,18 @@ model medical_insurance_plan {
   name                 String
   medical_insurance_id Int
   medical_insurance    medical_insurance @relation(fields: [medical_insurance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  personal_data        personal_data[]
 }
 
 model personal_data {
-  id                       Int               @id @default(autoincrement())
-  medical_insurance_id     Int
-  medical_insurance_number Int
-  user_id                  Int
-  created_at               DateTime          @default(now()) @db.Timestamp(6)
-  medical_insurance        medical_insurance @relation(fields: [medical_insurance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users                    users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                                                           Int                    @id @default(autoincrement())
+  user_id                                                      Int
+  medical_insurance                                            Int
+  medical_insurance_plan                                       Int
+  created_at                                                   DateTime?              @default(now()) @db.Timestamp(6)
+  medical_insurance_medical_insuranceTopersonal_data           medical_insurance      @relation(fields: [medical_insurance], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  medical_insurance_plan_medical_insurance_planTopersonal_data medical_insurance_plan @relation(fields: [medical_insurance_plan], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                                                        users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
@@ -70,4 +72,16 @@ model users {
   phone_number  String
   created_at    DateTime        @default(now()) @db.Timestamp(6)
   personal_data personal_data[]
+}
+
+model candidate_health_professional {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  email               String
+  cpf                 String
+  uf_registration     String
+  registration_type   String
+  professional_number Int
+  phone_number        String
+  created_at          DateTime @default(now()) @db.Timestamp(6)
 }
