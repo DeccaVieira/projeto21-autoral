@@ -31,8 +31,8 @@ model health_professional {
   id               Int      @id @default(autoincrement())
   name             String
   cbo_id           Int
-  created_at       DateTime @default(now()) @db.Timestamp(6)
   served_cities_id Int
+  created_at       DateTime @default(now()) @db.Timestamp(6)
   cbo              cbo      @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   cities           cities   @relation(fields: [served_cities_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -55,9 +55,10 @@ model medical_insurance_plan {
 model personal_data {
   id                                                           Int                    @id @default(autoincrement())
   user_id                                                      Int
+  created_at                                                   DateTime               @default(now()) @db.Timestamp(6)
   medical_insurance                                            Int
   medical_insurance_plan                                       Int
-  created_at                                                   DateTime?              @default(now()) @db.Timestamp(6)
+  medical_number                                               Int
   medical_insurance_medical_insuranceTopersonal_data           medical_insurance      @relation(fields: [medical_insurance], references: [id], onDelete: NoAction, onUpdate: NoAction)
   medical_insurance_plan_medical_insurance_planTopersonal_data medical_insurance_plan @relation(fields: [medical_insurance_plan], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users                                                        users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -69,8 +70,8 @@ model users {
   name          String
   email         String
   password      String
-  phone_number  String
   created_at    DateTime        @default(now()) @db.Timestamp(6)
+  phone_number  String
   personal_data personal_data[]
 }
 

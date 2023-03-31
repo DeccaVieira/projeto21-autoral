@@ -2,28 +2,28 @@ import prisma from '../src/config/database';
 
 async function main() {
 
-// await prisma.medical_insurance.createMany({
-//   data: [
-//     {
-//       "name": "Bradesco",
-//     },
-//     {
-//       "name": "Intermédica",
-//     },
-//     {
-//       "name": "Sulmérica"
-//     },
-//     {
-//       "name": "Porto Seguro"
-//     },
-//     {
-//       "name": "Mediservice"
-//     },
-//     {
-//       "name": "Central Nacional Unimed"
-//     },
-//   ]
-// })
+await prisma.medical_insurance.createMany({
+  data: [
+    {
+      "name": "Bradesco",
+    },
+    {
+      "name": "Intermédica",
+    },
+    {
+      "name": "Sulmérica"
+    },
+    {
+      "name": "Porto Seguro"
+    },
+    {
+      "name": "Mediservice"
+    },
+    {
+      "name": "Central Nacional Unimed"
+    },
+  ]
+})
 
 await prisma.medical_insurance_plan.createMany({
   data: [

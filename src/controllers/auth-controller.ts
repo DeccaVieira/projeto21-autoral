@@ -6,8 +6,9 @@ async function signInController(req: Request, res: Response) {
 
   try {
     const set = await signInService.userLogin(email, password);
+console.log(set,"cont");
 
-    return res.status(200).send(set.token);
+    return res.status(200).send(set);
   } catch (error) {
     if (error.name === "emailAndPasswordRequired") {
       return res.status(error.code).send(error.message);
