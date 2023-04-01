@@ -18,7 +18,7 @@ async function getPersonalService(id){
   try {
     
 const dataByUserId = await personalDataRepository.getPersonalData(id)
-console.log(dataByUserId,"www");
+
 
 if(!dataByUserId){
   throw personalErrors.dataDoesnotExist();
