@@ -16,8 +16,10 @@ async function getMedicalInsurance(req:Request, res: Response) {
 
 async function getPlanMedicalInsurance(req:Request, res: Response) {
 const {medical_insurance_id} = req.params;
+console.log(medical_insurance_id, "iddd");
+
   try {
-   const planMedicalInsurance = await medicalInsuranceService.getPlanMedicalInsuranceService(medical_insurance_id);
+   const planMedicalInsurance = await medicalInsuranceService.getPlanMedicalInsuranceService(+medical_insurance_id);
 
      return res.status(200).send(planMedicalInsurance);
    } catch (error) {

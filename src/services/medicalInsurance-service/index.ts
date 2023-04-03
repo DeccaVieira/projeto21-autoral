@@ -14,7 +14,9 @@ return medicalInsurance;
   }
 }
 
-async function getPlanMedicalInsuranceService(medical_insurance_id){
+async function getPlanMedicalInsuranceService(medical_insurance_id:number){
+  console.log(medical_insurance_id,"idd serv");
+  
   try {
     
 const planMedicalInsurance = await medicalInsuranceRepository.getPlanMedicalInsurance(medical_insurance_id)
