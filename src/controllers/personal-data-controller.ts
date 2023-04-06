@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
 import { AuthenticatedRequest } from "../middlewares/authentication-middleware";
-import { Personal } from "../protocols/personal-data-protocol"
+import { newPersonal, Personal } from "../protocols/personal-data-protocol"
 import personalService from "../services/personal-data-service"
 
 async function postPersonalData(req: AuthenticatedRequest, res: Response) {
   const { medicalInsurance, medicalInsurancePlan, medicalNumber } = req.body;
   const { id } = res.locals.signin;
 
-  const personalData = {
+  const personalData : newPersonal = {
     user_id: id,
-    medical_insurance: medicalInsurance,
-    medical_insurance_plan:medicalInsurancePlan,
-    medical_number:medicalNumber
+    medical_insurance: +medicalInsurance,
+    medical_insurance_plan: +medicalInsurancePlan,
+    medical_number: medicalNumber
   };
   
   

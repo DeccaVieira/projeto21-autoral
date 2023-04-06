@@ -5,7 +5,7 @@ import personalDataRepository from "../../repositories/personal-repository";
 async function createPersonalService(personalData){
   try {
     console.log(personalData, "ser");
-await personalDataRepository.createPersonalData(personalData)
+await personalDataRepository.upsert(personalData)
 
 return
   }catch (err){
