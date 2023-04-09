@@ -11,6 +11,7 @@ model cbo {
   id                  Int                   @id @default(autoincrement())
   cbo_code            Int?
   role                String
+  procedure_code      Int
   health_professional health_professional[]
 }
 
@@ -21,20 +22,14 @@ model cid {
   created_at  DateTime @default(now()) @db.Timestamp(6)
 }
 
-model cities {
-  id                  Int                   @id @default(autoincrement())
-  name                String
-  health_professional health_professional[]
-}
-
 model health_professional {
-  id               Int      @id @default(autoincrement())
-  name             String
-  cbo_id           Int
-  served_cities_id Int
-  created_at       DateTime @default(now()) @db.Timestamp(6)
-  cbo              cbo      @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  cities           cities   @relation(fields: [served_cities_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                   Int        @id @default(autoincrement())
+  name                 String
+  cbo_id               Int
+  picture_professional String
+  professional_number  Int
+  cbo                  cbo        @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  schedule             schedule[]
 }
 
 model medical_insurance {
@@ -54,7 +49,7 @@ model medical_insurance_plan {
 
 model personal_data {
   id                                                           Int                    @id @default(autoincrement())
-  user_id                                                      Int @unique
+  user_id                                                      Int                    @unique
   created_at                                                   DateTime               @default(now()) @db.Timestamp(6)
   medical_insurance                                            Int
   medical_insurance_plan                                       Int
@@ -65,14 +60,14 @@ model personal_data {
 }
 
 model users {
-  id            Int             @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   cpf           String
   name          String
   email         String
   password      String
-  created_at    DateTime        @default(now()) @db.Timestamp(6)
+  created_at    DateTime       @default(now()) @db.Timestamp(6)
   phone_number  String
-  personal_data personal_data[]
+  personal_data personal_data?
 }
 
 model candidate_health_professional {
@@ -85,4 +80,13 @@ model candidate_health_professional {
   professional_number Int
   phone_number        String
   created_at          DateTime @default(now()) @db.Timestamp(6)
+}
+
+model schedule {
+  id                  Int                 @id @default(autoincrement())
+  professional_id     Int
+  date_schedule       DateTime            @db.Date
+  hour_schedule       String              @db.Char(5)
+  patient_id          Int                 @default(0)
+  health_professional health_professional @relation(fields: [professional_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

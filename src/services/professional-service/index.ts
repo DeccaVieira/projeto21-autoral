@@ -13,10 +13,21 @@ return
   }
 }
 
+export async function getProfessionalByCbo(cbo_id) {
+  console.log(cbo_id, "service cbo");
+  try {
+    const professionalByCbo =
+      await professionalRepository.getHealthProfessional(cbo_id);
+    return professionalByCbo;
+  } catch (error) {
+    return error;
+  }
+}
+
 
 
 const professionalService = {
-  createProfessionalService
+  createProfessionalService, getProfessionalByCbo
 }
 
 export default professionalService

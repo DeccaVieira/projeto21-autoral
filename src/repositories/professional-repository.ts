@@ -14,8 +14,16 @@ export async function createProfessionalData({name, email,
   });
 }
 
+export async function getHealthProfessional(cbo_id:number){
+  console.log(typeof cbo_id, cbo_id, "repository cbo");
+  return prisma.health_professional.findMany({
+    where : {cbo_id: cbo_id}
+  })
+}
+
+
 const professionalRepository = {
-  createProfessionalData,
+  createProfessionalData, getHealthProfessional
 };
 
 export default professionalRepository;

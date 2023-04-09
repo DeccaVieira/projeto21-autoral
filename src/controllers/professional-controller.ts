@@ -33,8 +33,23 @@ cpf, ufRegistration,
   }
 };
 
+async function getProfessionalByCboId(req: Request, res: Response){
+    const {cbo_id} = req.params;
+console.log(cbo_id, "contorler cbo");
+
+  try{
+const professionalByRole = await professionalService.getProfessionalByCbo(+cbo_id)
+console.log(professionalByRole, "teste");
+
+return res.status(200).send(professionalByRole);
+  }catch(error) {
+    return res.status(400);
+  }
+
+} 
+
 const professionalController = {
-  postProfessional,
+  postProfessional, getProfessionalByCboId
 }
 
 export default professionalController;
