@@ -12,7 +12,20 @@ return availableSchedule;
   }
 }
 
+async function getScheduleByDayId(data_schedule_id){
+  try{
+const availableHour = await scheduleRepository.getHourByDayId(data_schedule_id);
+console.log(availableHour, "service");
+
+return availableHour;
+  }catch (error){
+    console.log(error);
+    
+  }
+}
+
+
 const scheduleService = {
-  getScheduleByProfId
+  getScheduleByProfId, getScheduleByDayId
 }
 export default scheduleService

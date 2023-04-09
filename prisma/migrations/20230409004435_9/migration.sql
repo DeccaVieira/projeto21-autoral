@@ -3,8 +3,6 @@ CREATE TABLE "schedule" (
     "id" SERIAL NOT NULL,
     "professional_id" INTEGER NOT NULL,
     "date_schedule" DATE NOT NULL,
-    "hour_schedule" CHAR(5) NOT NULL,
-    "patient_id" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "schedule_pkey" PRIMARY KEY ("id")
 );

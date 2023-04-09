@@ -14,7 +14,19 @@ async function GetAvailableSchedules(req: AuthenticatedRequest, res: Response) {
   }
 }
 
+async function GetAvailableHours(req: AuthenticatedRequest, res: Response) {
+  const {data_schedule_id} = req.params;
+try {
+  const hour = await scheduleService.getScheduleByDayId(+data_schedule_id);
+  console.log(hour, "controller");
+  
+  return res.status(200).send(hour);
+} catch (error) {
+  return res.status(400).send(error);
+}
+}
+
 const scheduleController = {
-  GetAvailableSchedules,
+  GetAvailableSchedules, GetAvailableHours
 };
 export default scheduleController;

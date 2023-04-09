@@ -85,8 +85,14 @@ model candidate_health_professional {
 model schedule {
   id                  Int                 @id @default(autoincrement())
   professional_id     Int
-  date_schedule       DateTime            @db.Date
-  hour_schedule       String              @db.Char(5)
-  patient_id          Int                 @default(0)
+  date_schedule       String
   health_professional health_professional @relation(fields: [professional_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  schedule_hour       schedule_hour[]
+}
+
+model schedule_hour {
+  id               Int       @id @default(autoincrement())
+  hour             String
+  date_schadule_id Int?
+  schedule         schedule? @relation(fields: [date_schadule_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
