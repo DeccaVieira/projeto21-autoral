@@ -16,6 +16,22 @@ async function GetAvailableSchedules(req: AuthenticatedRequest, res: Response) {
   }
 }
 
+async function verifyScheduleByDay(req: AuthenticatedRequest, res: Response){
+  const { date_schedule, professional_id } = req.params;
+  
+  
+  try {
+    const schedule = await scheduleService.getScheduleByDayId(
+      date_schedule, +professional_id
+    );
+  console.log(schedule, "cont sc");
+  
+ 
+    return res.status(200).send(schedule);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+}
 async function PostSchedule(req: AuthenticatedRequest, res: Response) {
   const schedulePost = req.body;
   const { id } = res.locals.signin;
@@ -36,6 +52,6 @@ async function PostSchedule(req: AuthenticatedRequest, res: Response) {
 
 const scheduleController = {
   GetAvailableSchedules,
-  PostSchedule,
+  PostSchedule,verifyScheduleByDay
 };
 export default scheduleController;

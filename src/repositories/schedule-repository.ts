@@ -7,7 +7,22 @@ async function getScheduleByProfessionalId(professional_id) {
     },
   });
 }
+async function getScheduleDate(scheduleDate, professionalId) {
+  console.log(scheduleDate, professionalId, "rep");
+  
+  try{
 
+    return prisma.schedule.findMany({
+      where: {
+        date_schedule: scheduleDate,
+        professional_id: professionalId
+      },
+    });
+  }catch(err){
+    console.log(err);
+    
+  }
+  }
 async function getUser(id) {
   return prisma.users.findFirst({
     where: { id: id },
@@ -46,5 +61,6 @@ const scheduleRepository = {
   getProfessional,
   postSchedule,
   isDuplicity,
+  getScheduleDate,
 };
 export default scheduleRepository;

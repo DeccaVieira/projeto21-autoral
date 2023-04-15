@@ -98,6 +98,9 @@ model scheduling {
   patient_id          Int?
   hour                String?
   schedule_date       String?
+  share_data          Int?
+  cbo                 Int?
+  quantity            Int?
   users               users?               @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   health_professional health_professional? @relation(fields: [professional_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

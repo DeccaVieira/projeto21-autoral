@@ -1,9 +1,12 @@
+import schedulingRepository from "../../repositories/scheduling-repository";
 import scheduleRepository from "../../repositories/schedule-repository";
 import professionalErrors from "./errors";
+import { HotModuleReplacementPlugin } from "webpack";
 
 async function getScheduleByProfId(professional_id) {
   try {
-    const availableSchedule = await scheduleRepository.getScheduleByProfessionalId(professional_id);
+    const availableSchedule =
+      await scheduleRepository.getScheduleByProfessionalId(professional_id);
 
     return availableSchedule;
   } catch (error) {
@@ -27,13 +30,13 @@ async function PostScheduleService(schedulePost, id) {
       throw professionalErrors.professionalDoesnotExist();
     }
     const duplicity = await scheduleRepository.isDuplicity(
-      schedulePost, idProfessional.id
+      schedulePost,
+      idProfessional.id
     );
-    
+
     if (duplicity) {
       throw professionalErrors.professionalDoesnotExist();
     }
-
 
     const postScheduleService = await scheduleRepository.postSchedule(
       schedulePost,
@@ -45,12 +48,113 @@ async function PostScheduleService(schedulePost, id) {
     console.log(error);
   }
 }
-async function getScheduleByDayId() {
-  const morning = ["07:00","07:30", "08:00", "08:30","09:00","09:30", "10:00", "10:30", "11:00", "11:30", "12:00"]
-  const afternoon = ["13:00","13:30", "14:00", "14:30","15:00","15:30", "16:00", "16:30", "17:00", "17:30", "18:00"]
-  
+async function getScheduleByDayId(scheduleDate, professionalId) {
+  console.log(scheduleDate, "hour sch");
+  const morning = [
+    "07:00",
+    "07:30",
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+  ];
+  const afternoon = [
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+  ];
+  const fullTime = [
+    "07:00",
+    "07:30",
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+  ];
   try {
-  
+    const dateSchedule = await scheduleRepository.getScheduleDate(scheduleDate, professionalId);
+    console.log(dateSchedule, "dateSchedule service");
+    let result;
+    let arr = [];
+   
+    
+    if (
+      (dateSchedule[0]?.shift_schedule === 1 &&
+        dateSchedule[1]?.shift_schedule === 2) ||
+      (dateSchedule[0]?.shift_schedule === 2 &&
+        dateSchedule[1]?.shift_schedule === 1)
+    ) {
+     
+      
+      result = [...fullTime];
+    } else if (dateSchedule[0]?.shift_schedule === 1) {
+      result = [...morning];
+     
+    } else {
+      result = [...afternoon];
+      
+    }
+    for (let i = 0; i < result.length ; i++) {
+      let hour = result[i];
+      const AvailableHour = await schedulingRepository.filterScheduling(
+        hour,
+        professionalId
+      );
+
+      arr = arr.concat(AvailableHour);
+    }
+    console.log(arr, "arr");
+
+    let array = [...result];
+
+    for (let i = 0; i < arr.length; i++) {
+      const hour = arr[i].hour;
+
+      if (array.includes(hour)) {
+        array = array.filter((item) => item !== hour);
+      }
+    }
+
+let newResult = []
+for(let i=0; i<result.length; i++){
+  if(array.includes(result[i])){
+    newResult.push({hour:result[i] , available: true})
+  }else{
+    newResult.push({hour:result[i] , available: false})
+  }
+}
+
+    console.log(newResult, "new array");
+    return newResult;
   } catch (error) {
     console.log(error);
   }

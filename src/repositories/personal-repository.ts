@@ -39,9 +39,24 @@ async function getPersonalData(id) {
   });
 }
 
+async function getNameInsurance(id){
+  return prisma.medical_insurance.findUnique({
+    where: {id}
+  })
+}
+
+async function getNamePlan(id){
+  console.log(id, "plan id");
+  
+  return prisma.medical_insurance_plan.findFirst({
+    where: {id}
+  })
+}
+
 const personalDataRepository = {
   getPersonalData,
-  createPersonalData, upsert
+  createPersonalData, upsert,
+  getNameInsurance, getNamePlan
 
 };
 

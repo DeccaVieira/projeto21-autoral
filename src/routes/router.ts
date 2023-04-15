@@ -6,7 +6,7 @@ import personalRouter from "./personalData.routes";
 import medicalInsuranceRouter from "../routes/medicalInsurance.routes";
 import cboRouter from "./cbo.routes";
 import scheduleRouter from "./schedule.routes";
-
+import schedulingRouter from "./scheduling-routes";
 const router = Router();
 
 router.use(signUpRouter);
@@ -16,5 +16,6 @@ router.use(personalRouter);
 router.use(medicalInsuranceRouter);
 router.use(cboRouter);
 router.use(scheduleRouter);
+router.use(schedulingRouter)
 
 export default router;

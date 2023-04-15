@@ -27,6 +27,22 @@ async function postPersonalData(req: AuthenticatedRequest, res: Response) {
   return res.status(500)
 }
 
+async function getPersonalDataInsurance(req: AuthenticatedRequest, res: Response) {
+  const { id } = res.locals.signin;
+console.log(id, "userId");
+
+ try {
+   const personal = await personalService.getPersonalDataName(+id)
+    return res.status(200).send(personal);
+  } catch (error) {
+    if (error.name === "dataDoesnotExist") {
+      return res.status(error.code).send(error.message);
+    }
+  
+  }
+}
+
+
 async function getPersonalData(req: AuthenticatedRequest, res: Response) {
   const { id } = res.locals.signin;
 console.log(id, "userId");
@@ -44,7 +60,7 @@ console.log(id, "userId");
 
 
 const personalDataController = {
-  getPersonalData, postPersonalData
+  getPersonalData, postPersonalData, getPersonalDataInsurance
 }
 
 export default personalDataController;
