@@ -7,6 +7,7 @@ import medicalInsuranceRouter from "../routes/medicalInsurance.routes";
 import cboRouter from "./cbo.routes";
 import scheduleRouter from "./schedule.routes";
 import schedulingRouter from "./scheduling-routes";
+import medicalRecordRouter from "./medicalRecord.routes";
 const router = Router();
 
 router.use(signUpRouter);
@@ -17,5 +18,5 @@ router.use(medicalInsuranceRouter);
 router.use(cboRouter);
 router.use(scheduleRouter);
 router.use(schedulingRouter)
-
+router.use(medicalRecordRouter)
 export default router;

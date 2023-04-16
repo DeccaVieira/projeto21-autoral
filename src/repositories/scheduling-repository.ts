@@ -21,22 +21,21 @@ async function createScheduling(scheduling) {
 }
 
 async function filterScheduling(hour, professional_id) {
-  console.log(hour, "repository");
-
   return prisma.scheduling.findMany({
     where: { hour: hour, professional_id: professional_id },
   });
 }
+
 async function professionalScheduling(schedule_date, id) {
-  console.log("professional");
+  console.log(schedule_date, "professional");
 
   return prisma.scheduling.findMany({
     where: {
       professional_id: id,
       schedule_date: schedule_date,
     },
-    include: { users: true},
-  
+    include: { users: true },
+
     orderBy: {
       hour: "asc",
     },
@@ -60,7 +59,7 @@ async function professionalById(id) {
 }
 async function professionalByName(name) {
   console.log(name);
-  
+
   return prisma.health_professional.findFirst({
     where: {
       name,
@@ -69,14 +68,25 @@ async function professionalByName(name) {
 }
 
 async function patientScheduling(id) {
-
-
   return prisma.users.findMany({
     where: { id },
     include: {
       scheduling: true,
     },
   });
+}
+
+async function concludedScheduling(scheduling_id, quantity){
+  return prisma.scheduling.update({
+    where: {
+      id: scheduling_id,
+    
+    },
+    data: {
+      quantity, 
+      is_concluded: true
+    }
+  })
 }
 
 const schedulingRepository = {
@@ -87,6 +97,7 @@ const schedulingRepository = {
   professionalById,
   professionalByName,
   dataUser,
+  concludedScheduling
 };
 
 export default schedulingRepository;

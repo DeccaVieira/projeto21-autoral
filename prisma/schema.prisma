@@ -13,6 +13,7 @@ model cbo {
   role                String
   procedure_code      Int
   health_professional health_professional[]
+  medical_record      medical_record[]
 }
 
 model cid {
@@ -23,12 +24,13 @@ model cid {
 }
 
 model health_professional {
-  id                   Int          @id @default(autoincrement())
+  id                   Int              @id @default(autoincrement())
   name                 String
   cbo_id               Int
   picture_professional String
   professional_number  Int
-  cbo                  cbo          @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cbo                  cbo              @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  medical_record       medical_record[]
   schedule             schedule[]
   scheduling           scheduling[]
 }
@@ -61,15 +63,16 @@ model personal_data {
 }
 
 model users {
-  id            Int            @id @default(autoincrement())
-  cpf           String
-  name          String
-  email         String
-  password      String
-  phone_number  String
-  isdoctor      Boolean?       @default(false)
-  personal_data personal_data?
-  scheduling    scheduling[]
+  id             Int              @id @default(autoincrement())
+  cpf            String
+  name           String
+  email          String
+  password       String
+  phone_number   String
+  isdoctor       Boolean?         @default(false)
+  medical_record medical_record[]
+  personal_data  personal_data?
+  scheduling     scheduling[]
 }
 
 model candidate_health_professional {
@@ -101,6 +104,19 @@ model scheduling {
   share_data          Int?
   cbo                 Int?
   quantity            Int?
+  is_concluded        Boolean?
+  users               users?               @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  health_professional health_professional? @relation(fields: [professional_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model medical_record {
+  id                  Int                  @id @default(autoincrement())
+  patient_id          Int?
+  professional_id     Int?
+  cbo_id              Int?
+  description         String?
+  created_at          DateTime?            @default(dbgenerated("CURRENT_DATE")) @db.Date
+  cbo                 cbo?                 @relation(fields: [cbo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users               users?               @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   health_professional health_professional? @relation(fields: [professional_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

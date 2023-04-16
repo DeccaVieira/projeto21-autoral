@@ -51,6 +51,20 @@ async function getScheduleByProfessionalId(
     return res.sendStatus(400);
   }
 }
+
+async function updateSchedulingController(req: AuthenticatedRequest, res: Response) {
+  const { id } = res.locals.signin;
+  const {quantity} = req.body;
+  const {scheduling_id} = req.params;
+  try {
+    await schedulingService.updateScheduling(+scheduling_id, quantity, id)
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
+
 async function getScheduleByPatientId(
   req: AuthenticatedRequest,
   res: Response
@@ -73,6 +87,7 @@ const schedulingController = {
   PostScheduling,
   getScheduleByProfessionalId,
   getScheduleByPatientId,
+  updateSchedulingController
 };
 
 export default schedulingController;

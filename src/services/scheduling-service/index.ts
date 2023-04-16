@@ -13,13 +13,22 @@ async function PostSchedulingService(scheduling) {
     console.log(error);
   }
 }
-async function GetPatientScheduleService( id) {
+
+async function updateScheduling(scheduling_id, quantity, id){
+try {
+  await schedulingRepository.concludedScheduling(scheduling_id, quantity);
+
+} catch (error) {
+  console.log(error);
   
-  
+}
+}
+
+async function GetPatientScheduleService(id) {
   try {
-    const scheduling = await schedulingRepository.patientScheduling(id)
-   
-    return scheduling
+    const scheduling = await schedulingRepository.patientScheduling(id);
+
+    return scheduling;
   } catch (error) {
     console.log(error);
   }
@@ -27,18 +36,20 @@ async function GetPatientScheduleService( id) {
 
 async function GetProfessionalScheduleService(date_schedule, id) {
   try {
-    const professionalName = await schedulingRepository.professionalById(+id)
+    const professionalName = await schedulingRepository.professionalById(+id);
     console.log(professionalName, "rrrr");
-    
-    const professionalHealth = await schedulingRepository.professionalByName(professionalName.name)
-   console.log(professionalHealth, "proff");
-   
-    const scheduling = await schedulingRepository.professionalScheduling(date_schedule, professionalHealth.id);
-   
 
-//const teste = {...scheduling}
-   
-   return scheduling
+    const professionalHealth = await schedulingRepository.professionalByName(
+      professionalName.name
+    );
+    console.log(professionalHealth, "proff");
+
+    const scheduling = await schedulingRepository.professionalScheduling(
+      date_schedule,
+      professionalHealth.id
+    );
+
+    return scheduling;
   } catch (error) {
     console.log(error);
   }
@@ -48,5 +59,6 @@ const schedulingService = {
   PostSchedulingService,
   GetPatientScheduleService,
   GetProfessionalScheduleService,
+  updateScheduling
 };
 export default schedulingService;

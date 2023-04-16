@@ -2,13 +2,22 @@ import schedulingRepository from "../../repositories/scheduling-repository";
 import scheduleRepository from "../../repositories/schedule-repository";
 import professionalErrors from "./errors";
 import { HotModuleReplacementPlugin } from "webpack";
-
+import dayjs = require("dayjs");
 async function getScheduleByProfId(professional_id) {
+  const today = dayjs().format()
+  let array = []
   try {
     const availableSchedule =
       await scheduleRepository.getScheduleByProfessionalId(professional_id);
+{availableSchedule.map((s)=> {
 
-    return availableSchedule;
+  if(s.date_schedule > today){    
+  return array.push(s)
+  }
+})}
+console.log(array, "array");
+
+    return array;
   } catch (error) {
     console.log(error);
   }

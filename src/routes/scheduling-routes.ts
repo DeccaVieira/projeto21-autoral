@@ -8,5 +8,5 @@ const schedulingRouter = Router();
 schedulingRouter.post("/scheduling", tokenAuthentication, schedulingController.PostScheduling);
 schedulingRouter.get("/scheduling-professional/:schedule_date", tokenAuthentication, schedulingController.getScheduleByProfessionalId);
 schedulingRouter.get("/scheduling-patient", tokenAuthentication, schedulingController.getScheduleByPatientId);
-
+schedulingRouter.put("/scheduling/:scheduling_id", tokenAuthentication,schedulingController.updateSchedulingController);
 export default schedulingRouter;
